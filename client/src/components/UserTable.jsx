@@ -1,31 +1,8 @@
-const sampleUsers = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john.doe@example.com",
-    username: "johndoe",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    username: "janesmith",
-  },
-  {
-    id: 3,
-    name: "Mike Johnson",
-    email: "mike.johnson@example.com",
-    username: "mikejohnson",
-  },
-  {
-    id: 4,
-    name: "Emily Davis",
-    email: "emily.davis@example.com",
-    username: "emilydavis",
-  },
-];
+import { useEffect, useState } from "react";
 
-function UserTable({ users }) {
+function UserTable() {
+  const [usersData, setUsersData] = useState(null);
+  const [error, setError] = useState(null);
   const handleView = (id) => {
     // handle view logic
     console.log("View user", id);
@@ -40,6 +17,14 @@ function UserTable({ users }) {
     // handle delete logic
     console.log("Delete user", id);
   };
+
+  useEffect(() => {
+    fetch("http://localhost:3000/users")
+      .then((res) => res.json())
+      .then((data) => setUsersData(data))
+      .catch((err) => setError(err));
+  }, []);
+
   return (
     <div className="user-table-container">
       <h2>User List</h2>
@@ -53,7 +38,7 @@ function UserTable({ users }) {
           </tr>
         </thead>
         <tbody>
-          {sampleUsers.map((user, index) => (
+          {usersData?.map((user, index) => (
             <tr key={index}>
               <td>{user.name}</td>
               <td>{user.email}</td>
@@ -81,6 +66,7 @@ function UserTable({ users }) {
             </tr>
           ))}
         </tbody>
+        {error && <p className="p-error">Error while fetching data..</p>}
       </table>
     </div>
   );

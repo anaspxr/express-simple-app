@@ -55,3 +55,7 @@
 .btn:hover {
   opacity: 0.8;
 }
+
+.p-error {
+  color: red;
+}
