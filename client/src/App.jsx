@@ -4,7 +4,6 @@ function App() {
   return (
     <>
       <div>
-        <button>Fetch data</button>
         <UserTable />
       </div>
     </>

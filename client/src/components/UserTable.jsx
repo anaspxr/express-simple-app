@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
+import UserView from "./UserView";
 
 function UserTable() {
   const [usersData, setUsersData] = useState(null);
   const [error, setError] = useState(null);
+  const [userViewData, setUserViewData] = useState(null);
   const handleView = (id) => {
     // handle view logic
-    console.log("View user", id);
+    fetch(`http://localhost:3000/users/${id}`)
+      .then((res) => res.json())
+      .then((data) => setUserViewData(data))
+      .catch((err) => console.log(err));
   };
 
   const handleEdit = (id) => {
@@ -14,8 +19,11 @@ function UserTable() {
   };
 
   const handleDelete = (id) => {
-    // handle delete logic
-    console.log("Delete user", id);
+    if (confirm("Are you sure?")) {
+      fetch(`http://localhost:3000/users/${id}`, {
+        method: "DELETE",
+      });
+    }
   };
 
   useEffect(() => {
@@ -27,6 +35,7 @@ function UserTable() {
 
   return (
     <div className="user-table-container">
+      {userViewData && <UserView userData={userViewData} />}
       <h2>User List</h2>
       <table className="user-table">
         <thead>
@@ -66,8 +75,8 @@ function UserTable() {
             </tr>
           ))}
         </tbody>
-        {error && <p className="p-error">Error while fetching data..</p>}
       </table>
+      {error && <p className="p-error">Error while fetching data..</p>}
     </div>
   );
 }
