@@ -60,10 +60,17 @@
   color: red;
 }
 
-.user-container {
+.user-container,
+.edit-form {
   margin: auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #ffffff;
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
