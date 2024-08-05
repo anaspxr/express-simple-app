@@ -10,6 +10,7 @@ router
 router
   .route("/users/:id")
   .get(userControllers.handleUserView)
-  .delete(userControllers.handleDelete);
+  .delete(userControllers.handleDelete)
+  .post(userControllers.handleEdit);
 
 module.exports = router;

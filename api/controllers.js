@@ -70,9 +70,39 @@ const handleDelete = (req, res) => {
     }
   });
 };
+
+const handleEdit = (req, res) => {
+  const id = req.params.id;
+  fs.readFile("./data/users.json", "utf-8", (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(400);
+    } else {
+      const parsed = JSON.parse(data);
+      console.log(req.body);
+      const edited = req.body;
+      const index = parsed.findIndex((user) => user.id == id);
+      if (index === -1) {
+        res.send(400);
+      } else {
+        parsed.splice(index, 1, edited);
+        const newData = JSON.stringify(parsed);
+        fs.writeFile("./data/users.json", newData, "utf-8", (err) => {
+          if (err) {
+            console.log(err);
+            res.sendStatus(400);
+          } else {
+            res.sendStatus(202);
+          }
+        });
+      }
+    }
+  });
+};
 module.exports = {
   handleCreate,
   handleGet,
   handleUserView,
   handleDelete,
+  handleEdit,
 };
