@@ -1,9 +1,4 @@
-export default function UserView({ userData }) {
-  const handleEdit = (id) => {
-    // handle edit logic
-    console.log("Edit user", id);
-  };
-
+export default function UserView({ userData, setEditOpen }) {
   const handleDelete = (id) => {
     if (confirm("Are you sure?")) {
       fetch(`http://localhost:3000/users/${id}`, {
@@ -20,9 +15,9 @@ export default function UserView({ userData }) {
       <div>
         <button
           className="btn edit-btn"
-          onClick={() => handleEdit(userData.id)}
+          onClick={() => setEditOpen((prev) => !prev)}
         >
-          Edit
+          Edit/ Cancel
         </button>
         <button
           className="btn delete-btn"

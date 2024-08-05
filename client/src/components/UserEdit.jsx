@@ -9,6 +9,11 @@ export default function UserEdit({ userData }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    fetch(`http://localhost:3000/users/${userData.id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
   };
   return (
     <div>

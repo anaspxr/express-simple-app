@@ -7,15 +7,12 @@ function UserTable() {
   const [usersData, setUsersData] = useState(null);
   const [error, setError] = useState(null);
   const [userViewData, setUserViewData] = useState(null);
+
   const handleView = (id) => {
     fetch(`http://localhost:3000/users/${id}`)
       .then((res) => res.json())
       .then((data) => setUserViewData(data))
       .catch((err) => console.log(err));
-  };
-
-  const handleEdit = () => {
-    setEditOpen(true);
   };
 
   const handleDelete = (id) => {
@@ -35,12 +32,12 @@ function UserTable() {
 
   return (
     <div className="user-table-container">
-      {userViewData &&
-        (editOpen ? (
-          <UserEdit userData={userViewData} />
-        ) : (
-          <UserView userData={userViewData} />
-        ))}
+      {userViewData && (
+        <UserView userData={userViewData} setEditOpen={setEditOpen} />
+      )}
+      {editOpen && (
+        <UserEdit userData={userViewData} setEditOpen={setEditOpen} />
+      )}
       <h2>User List</h2>
       <table className="user-table">
         <thead>
@@ -64,12 +61,7 @@ function UserTable() {
                 >
                   View
                 </button>
-                <button
-                  className="btn edit-btn"
-                  onClick={() => handleEdit(user.id)}
-                >
-                  Edit
-                </button>
+
                 <button
                   className="btn delete-btn"
                   onClick={() => handleDelete(user.id)}
