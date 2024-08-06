@@ -57,14 +57,16 @@ function UserTable() {
               <td>
                 <button
                   className="btn view-btn"
-                  onClick={() => handleView(user.id)}
+                  onClick={() => {
+                    handleView(user._id);
+                  }}
                 >
                   View
                 </button>
 
                 <button
                   className="btn delete-btn"
-                  onClick={() => handleDelete(user.id)}
+                  onClick={() => handleDelete(user._id)}
                 >
                   Delete
                 </button>
