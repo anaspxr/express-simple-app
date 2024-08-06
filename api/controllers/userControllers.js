@@ -1,4 +1,3 @@
-const fs = require("node:fs");
 const User = require("../schemas/userSchema");
 
 const handleGet = async (_, res) => {
@@ -30,26 +29,14 @@ const handleUserView = async (req, res) => {
   }
 };
 
-const handleDelete = (req, res) => {
-  const id = req.params.id;
-  fs.readFile("./data/users.json", "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.header({ "Content-Type": "application/json" });
-      const allUsersData = JSON.parse(data);
-      const newUSersData = JSON.stringify(
-        allUsersData.filter((user) => user.id != id)
-      );
-      fs.writeFile("./data/users.json", newUSersData, "utf-8", (err) => {
-        if (err) {
-          res.sendStatus(400);
-        } else {
-          res.sendStatus(202);
-        }
-      });
-    }
-  });
+const handleDelete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await User.findByIdAndDelete(id);
+    res.sendStatus(202);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const handleEdit = async (req, res) => {
