@@ -33,7 +33,11 @@ function UserTable() {
   return (
     <div className="user-table-container">
       {userViewData && (
-        <UserView userData={userViewData} setEditOpen={setEditOpen} />
+        <UserView
+          userData={userViewData}
+          editOpen={editOpen}
+          setEditOpen={setEditOpen}
+        />
       )}
       {editOpen && (
         <UserEdit userData={userViewData} setEditOpen={setEditOpen} />

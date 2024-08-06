@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const UserCreationForm = () => {
+const UserCreationForm = ({ hideForm }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,7 +28,10 @@ const UserCreationForm = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
     })
-      .then(() => console.log("user created"))
+      .then(() => {
+        alert("user created");
+        hideForm();
+      })
       .catch((error) => console.log(error));
   };
 

@@ -129,3 +129,7 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+.no-record {
+  color: gray;
+}

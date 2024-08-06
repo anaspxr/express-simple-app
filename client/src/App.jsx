@@ -6,7 +6,13 @@ function App() {
   const [formOpen, setFormOpen] = useState(false);
   return (
     <div className="main">
-      {formOpen && <UserCreationForm />}
+      {formOpen && (
+        <UserCreationForm
+          hideForm={() => {
+            setFormOpen(false);
+          }}
+        />
+      )}
       <button className="create-bt" onClick={() => setFormOpen(!formOpen)}>
         {formOpen ? "Cancel" : "Create new User"}
       </button>
