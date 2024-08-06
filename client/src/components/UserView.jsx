@@ -8,7 +8,7 @@ export default function UserView({ userData, setEditOpen }) {
   };
   return (
     <div className="user-container">
-      <p>id:{userData.id}</p>
+      <p>id:{userData._id}</p>
       <p>Username: {userData.username}</p>
       <p>Email:{userData.email}</p>
       <p>Name:{userData.name}</p>

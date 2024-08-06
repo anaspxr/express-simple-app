@@ -9,10 +9,12 @@ export default function UserEdit({ userData }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3000/users/${userData.id}`, {
+    fetch(`http://localhost:3000/users/${userData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
+    }).then(() => {
+      alert("Updated..!");
     });
   };
   return (
@@ -43,7 +45,7 @@ export default function UserEdit({ userData }) {
           <input
             id="email"
             name="email"
-            value={userData.email}
+            value={values.email}
             onChange={handleChange}
             type="email"
           />
