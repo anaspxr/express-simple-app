@@ -21,7 +21,7 @@ export default function UserView({ userData, setEditOpen }) {
         </button>
         <button
           className="btn delete-btn"
-          onClick={() => handleDelete(userData.id)}
+          onClick={() => handleDelete(userData._id)}
         >
           Delete
         </button>
