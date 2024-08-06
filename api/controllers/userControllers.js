@@ -1,51 +1,34 @@
 const fs = require("node:fs");
+const User = require("../schemas/userSchema");
 
-const handleGet = (_, res) => {
-  fs.readFile("./data/users.json", "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.header({ "Content-Type": "application/json" });
-      res.send(data);
-    }
-  });
+const handleGet = async (_, res) => {
+  try {
+    const user = await User.find();
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const handleCreate = (req, res) => {
-  fs.readFile("./data/users.json", "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-      res.sendStatus(400);
-    } else {
-      const parsed = JSON.parse(data);
-      const newUser = req.body;
-      newUser.id = Date.now();
-      parsed.push(newUser);
-      const newData = JSON.stringify(parsed);
-      fs.writeFile("./data/users.json", newData, "utf-8", (err) => {
-        if (err) {
-          console.log(err);
-          res.sendStatus(400);
-        } else {
-          res.sendStatus(201);
-        }
-      });
-    }
-  });
+const handleCreate = async (req, res) => {
+  try {
+    const newUser = await User.create(req.body);
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const handleUserView = (req, res) => {
-  const id = req.params.id;
-  fs.readFile("./data/users.json", "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.header({ "Content-Type": "application/json" });
-      const allUsersData = JSON.parse(data);
-      const userData = allUsersData.find((user) => user.id == id);
-      res.send(userData);
-    }
-  });
+const handleUserView = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    console.log(user);
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const handleDelete = (req, res) => {
