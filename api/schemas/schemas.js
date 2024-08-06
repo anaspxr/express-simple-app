@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     state: String,
     city: String,
   },
+  image: String,
 });
 
 userSchema.pre("save", function (next) {

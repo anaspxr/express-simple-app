@@ -1,8 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const userRouter = require("./routes");
-const User = require("./schemas");
+const userRouter = require("./routes/userRoutes");
 require("dotenv").config();
 
 mongoose.connect("mongodb://localhost/exp").then(() => {
