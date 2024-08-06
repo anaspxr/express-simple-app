@@ -39,5 +39,21 @@ userSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
+userSchema.pre("findOneAndUpdate", function (next) {
+  console.log("hi");
+
+  this.set({ updatedAt: Date.now() });
+  next();
+});
+
+userSchema.pre("updateOne", function (next) {
+  this.set({ updatedAt: Date.now() });
+  next();
+});
+
+userSchema.pre("updateMany", function (next) {
+  this.set({ updatedAt: Date.now() });
+  next();
+});
 
 module.exports = mongoose.model("User", userSchema);
