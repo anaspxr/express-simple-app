@@ -23,7 +23,6 @@ const handleUserView = async (req, res) => {
   try {
     const id = req.params.id;
     const user = await User.findById(id);
-    console.log(user);
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
@@ -44,7 +43,6 @@ const handleDelete = (req, res) => {
       );
       fs.writeFile("./data/users.json", newUSersData, "utf-8", (err) => {
         if (err) {
-          console.log(err);
           res.sendStatus(400);
         } else {
           res.sendStatus(202);
@@ -54,33 +52,14 @@ const handleDelete = (req, res) => {
   });
 };
 
-const handleEdit = (req, res) => {
-  const id = req.params.id;
-  fs.readFile("./data/users.json", "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-      res.sendStatus(400);
-    } else {
-      const parsed = JSON.parse(data);
-      console.log(req.body);
-      const edited = req.body;
-      const index = parsed.findIndex((user) => user.id == id);
-      if (index === -1) {
-        res.send(400);
-      } else {
-        parsed.splice(index, 1, edited);
-        const newData = JSON.stringify(parsed);
-        fs.writeFile("./data/users.json", newData, "utf-8", (err) => {
-          if (err) {
-            console.log(err);
-            res.sendStatus(400);
-          } else {
-            res.sendStatus(202);
-          }
-        });
-      }
-    }
-  });
+const handleEdit = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await User.findByIdAndUpdate(id, req.body);
+    res.sendStatus(202);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 module.exports = {
   handleCreate,
