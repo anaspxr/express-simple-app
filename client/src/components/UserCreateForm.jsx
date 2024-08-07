@@ -21,6 +21,7 @@ const UserCreationForm = ({ hideForm }) => {
     e.preventDefault();
     const userData = {
       ...formData,
+      address: { state: formData.state, city: formData.city },
       hobbies: formData.hobbies.split(",").map((hobby) => hobby.trim()),
     };
     fetch("http://localhost:3000/users", {
